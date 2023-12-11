@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
 import { config } from "../config/config.js";
+import { logger } from "../helpers/logger.js";
 
 //check user autehenticated
 export const isAuth = (req, res, next) => {
   jwt.verify(req.cookies.cookieToken, config.token.privateKey, (err, user) => {
     if (err) {
-      console.log(err);
+      logger.error(err);
       res.json({
         status: "error",
         message: "you must be authenticated to access",
@@ -24,7 +25,7 @@ export const checkRole = (roles) => {
       config.token.privateKey,
       (err, user) => {
         if (err) {
-          console.log(err);
+          logger.error(err);
           res.redirect("/profile?error=access_denied");
         } else {
           if (roles.includes(user.role)) {

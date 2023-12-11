@@ -18,6 +18,7 @@ import { sessionsRouter } from "./routes/sessions.routes.js";
 import { connectDB } from "./config/dbConnection.js";
 import { initializePassport } from "./config/passport.config.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import { logger } from "./helpers/logger.js";
 
 const port = 8080;
 const app = express();
@@ -46,7 +47,7 @@ app.set("views", path.join(__dirname, "/views"));
 
 //server
 const httpServer = app.listen(port, () =>
-  console.log(`server running on port ${port}`)
+  logger.info(`server running on port ${port}`)
 );
 
 connectDB();
@@ -65,7 +66,7 @@ const io = new Server(httpServer);
 //PRODUCTS
 io.on("connection", async (socket) => {
   try {
-    console.log("client connected");
+    logger.info("client connected");
     const products = await ProductsService.getProducts();
     socket.emit("products", products);
 
@@ -86,7 +87,7 @@ io.on("connection", async (socket) => {
         const updatedProducts = await ProductsService.getProducts();
         io.emit("products", updatedProducts);
       } catch (error) {
-        console.log(error);
+        logger.error(error);
       }
     });
 
@@ -97,11 +98,11 @@ io.on("connection", async (socket) => {
 
         socket.emit("products", updatedProducts);
       } catch (error) {
-        console.log(error);
+        logger.error(error);
       }
     });
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 });
 
@@ -116,7 +117,7 @@ io.on("connection", async (socket) => {
         console.log("Authenticated event received:", data);
         socket.broadcast.emit("newUser", `${data} is connected`);
       } catch (error) {
-        console.log(error);
+        logger.error(error);
       }
     });
 
@@ -130,11 +131,11 @@ io.on("connection", async (socket) => {
           io.emit("chatHistory", messageDB);
         }
       } catch (error) {
-        console.log(error);
+        logger.error(error);
       }
     });
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 });
 
@@ -144,6 +145,6 @@ io.on("connection", async (socket) => {
     const cart = await CartsService.getCarts();
     socket.emit("products", cart);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 });

@@ -1,4 +1,5 @@
 import { ticketsModel } from "./models/tickets.model.js";
+import { logger } from "../../helpers/logger.js";
 
 export class TikcketsManagerMongo {
   constructor() {
@@ -10,7 +11,7 @@ export class TikcketsManagerMongo {
       const result = await this.model.find();
       return result;
     } catch (error) {
-      console.log(`get tickets error: ${error.message}`);
+      logger.error(`get tickets error: ${error.message}`);
       throw new Error(`get tickets error: ${error.message}`);
     }
   }
@@ -20,7 +21,7 @@ export class TikcketsManagerMongo {
       const result = await this.model.create(ticket);
       return result;
     } catch (error) {
-      console.log(`add ticket error: ${error.message}`);
+      logger.error(`add ticket error: ${error.message}`);
       throw new Error(`add ticket error: ${error.message}`);
     }
   }
@@ -30,7 +31,7 @@ export class TikcketsManagerMongo {
       const result = await this.model.findById(id);
       return result;
     } catch (error) {
-      console.log(`get ticket by ID error: ${error.message}`);
+      logger.error(`get ticket by ID error: ${error.message}`);
       throw new Error(`get ticket by ID error: ${error.message}`);
     }
   }

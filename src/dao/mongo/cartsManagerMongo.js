@@ -1,4 +1,5 @@
 import { cartsModel } from "./models/carts.model.js";
+import { logger } from "../../helpers/logger.js";
 
 export class CartsManagerMongo {
   constructor() {
@@ -12,7 +13,7 @@ export class CartsManagerMongo {
       const result = await this.model.create(cart);
       return result;
     } catch (error) {
-      console.log(`add cart error: ${error.message}`);
+      logger.error(`add cart error: ${error.message}`);
       throw new Error(`add cart error: ${error.message}`);
     }
   }
@@ -23,7 +24,7 @@ export class CartsManagerMongo {
       const result = await this.model.find().lean();
       return result;
     } catch (error) {
-      console.log(`get carts error: ${error.message}`);
+      logger.error(`get carts error: ${error.message}`);
       throw new Error(`get carts error: ${error.message}`);
     }
   }
@@ -41,7 +42,7 @@ export class CartsManagerMongo {
         return result;
       }
     } catch (error) {
-      console.log(`get cart by ID error: ${error.message}`);
+      logger.error(`get cart by ID error: ${error.message}`);
       throw new Error(`get cart by ID error: ${error.message}`);
     }
   }
@@ -60,7 +61,7 @@ export class CartsManagerMongo {
         return result;
       }
     } catch (error) {
-      console.log(`update cart error: ${error.message}`);
+      logger.error(`update cart error: ${error.message}`);
       throw new Error(`update cart error: ${error.message}`);
     }
   }
@@ -75,7 +76,7 @@ export class CartsManagerMongo {
         return result;
       }
     } catch (error) {
-      console.log(`delete cart error: ${error.message}`);
+      logger.error(`delete cart error: ${error.message}`);
       throw new Error(`delete cart error: ${error.message}`);
     }
   }
@@ -106,7 +107,7 @@ export class CartsManagerMongo {
       });
       return result;
     } catch (error) {
-      console.log(`add product to cart error: ${error.message}`);
+      logger.error(`add product to cart error: ${error.message}`);
       throw new Error(`add product to cart error: ${error.message}`);
     }
   }
@@ -132,7 +133,7 @@ export class CartsManagerMongo {
         throw new Error("error deleting product...");
       }
     } catch (error) {
-      console.log(`delete cart error: ${error.message}`);
+      logger.error(`delete cart error: ${error.message}`);
       throw new Error(`delete cart error: ${error.message}`);
     }
   }
@@ -153,7 +154,7 @@ export class CartsManagerMongo {
         return result;
       }
     } catch (error) {
-      console.log(`update product cart error: ${error.message}`);
+      logger.error(`update product cart error: ${error.message}`);
       throw new Error(`update product cart error: ${error.message}`);
     }
   }

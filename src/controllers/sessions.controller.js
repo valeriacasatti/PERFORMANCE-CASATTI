@@ -5,6 +5,7 @@ import {
   loginError,
 } from "../services/errors/createError.service.js";
 import { EError } from "../enums/EError.js";
+import { logger } from "../helpers/logger.js";
 
 export class SessionsController {
   //sign up
@@ -68,7 +69,7 @@ export class SessionsController {
     try {
       res.json({ status: "success", message: "valid request", data: req.user });
     } catch (error) {
-      console.log(error);
+      logger.error(error);
     }
   };
 

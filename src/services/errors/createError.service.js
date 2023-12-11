@@ -1,4 +1,5 @@
 //AUTH
+
 export const authError = () => {
   return `full name, email & password fields are required`;
 };

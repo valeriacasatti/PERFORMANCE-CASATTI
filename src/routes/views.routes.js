@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { ViewsController } from "../controllers/views.controller.js";
 import { checkRole, isAuth } from "../middlewares/auth.js";
+import { logger } from "../helpers/logger.js";
 
 const router = Router();
 
@@ -18,5 +19,12 @@ router.get("/signup", ViewsController.signup);
 router.get("/login", ViewsController.login);
 //profile
 router.get("/profile", ViewsController.profile);
+//LOGGER TEST
+router.get("/testLogger", (req, res) => {
+  logger.error("log error");
+  logger.warning("log warning");
+  logger.debbug("log debbug");
+  res.send("prueba logger");
+});
 
 export { router as viewsRouter };

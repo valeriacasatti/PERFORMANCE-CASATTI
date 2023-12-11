@@ -6,6 +6,7 @@ import {
   updateProductError,
   deleteProductError,
 } from "../../services/errors/createError.service.js";
+import { logger } from "../../helpers/logger.js";
 
 export class ProductsManagerMongo {
   constructor() {
@@ -18,7 +19,7 @@ export class ProductsManagerMongo {
       const result = await this.model.find().lean();
       return result;
     } catch (error) {
-      console.log(`get products error: ${error.message}`);
+      logger.error(`get products error: ${error.message}`);
       throw new Error(`get products error: ${error.message}`);
     }
   }
@@ -29,7 +30,7 @@ export class ProductsManagerMongo {
       const result = await this.model.paginate(query, options);
       return result;
     } catch (error) {
-      console.log(`get products error: ${error.message}`);
+      logger.error(`get products error: ${error.message}`);
       throw new Error(`get products error: ${error.message}`);
     }
   }
@@ -46,7 +47,7 @@ export class ProductsManagerMongo {
         message: addProductError(),
         code: EError.PRODUCTS_ERROR,
       });
-      console.log(errorAddProduct);
+      logger.error(errorAddProduct);
       throw new Error(errorAddProduct);
     }
   }
@@ -57,7 +58,7 @@ export class ProductsManagerMongo {
       const result = await this.model.findById(id);
       return result;
     } catch (error) {
-      console.log(`get product by id error: ${error.message}`);
+      logger.error(`get product by id error: ${error.message}`);
       throw new Error(`the product with ID ${id} wasn't found`);
     }
   }
@@ -76,7 +77,7 @@ export class ProductsManagerMongo {
         message: updateProductError(),
         code: EError.PRODUCTS_ERROR,
       });
-      console.log(errorUpdateProduct);
+      logger.error(errorUpdateProduct);
       throw new Error(errorUpdateProduct);
     }
   }
@@ -95,7 +96,7 @@ export class ProductsManagerMongo {
         return result;
       }
     } catch (error) {
-      console.log(`update product stock error: ${error.message}`);
+      logger.error(`update product stock error: ${error.message}`);
       throw new Error(`update product stock error: ${error.message}`);
     }
   }
@@ -105,7 +106,7 @@ export class ProductsManagerMongo {
     try {
       const result = await this.model.findByIdAndDelete(id);
       if (!result) {
-        throw new Error("product not found");
+        throw new Error(deleteProductError());
       } else {
         return result;
       }
@@ -116,7 +117,7 @@ export class ProductsManagerMongo {
         message: deleteProductError(),
         code: EError.PRODUCTS_ERROR,
       });
-      console.log(errorDeleteProduct);
+      logger.error(errorDeleteProduct);
       throw new Error(errorDeleteProduct);
     }
   }

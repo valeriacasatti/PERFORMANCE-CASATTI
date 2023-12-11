@@ -74,7 +74,7 @@ export class ProductsController {
             message: updateProductError(pid, updatedContent),
             code: EError.PRODUCTS_ERROR,
           });
-          console.log(errorUpdateProduct);
+          logger.error(errorUpdateProduct);
           throw new Error(errorUpdateProduct);
         }
       }
@@ -101,8 +101,6 @@ export class ProductsController {
           status: "success",
           message: "product deleted successfully",
         });
-      } else {
-        res.json({ status: "error", message: "error deleting product..." });
       }
     } catch (error) {
       res.json({ status: "error", message: error.message });

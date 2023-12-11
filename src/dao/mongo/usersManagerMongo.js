@@ -1,4 +1,5 @@
 import { usersModel } from "./models/users.model.js";
+import { logger } from "../../helpers/logger.js";
 
 export class UsersManagerMongo {
   constructor() {
@@ -11,7 +12,7 @@ export class UsersManagerMongo {
       const result = await this.model.create(userInfo);
       return result;
     } catch (error) {
-      console.log(`add user error: ${error.message}`);
+      logger.error(`add user error: ${error.message}`);
       throw new Error(`add user error: ${error.message}`);
     }
   }
@@ -22,7 +23,7 @@ export class UsersManagerMongo {
       const result = await this.model.findById(id);
       return result;
     } catch (error) {
-      console.log(`get user by ID error: ${error.message}`);
+      logger.error(`get user by ID error: ${error.message}`);
       throw new Error(`get user by ID error: ${error.message}`);
     }
   }
@@ -33,7 +34,7 @@ export class UsersManagerMongo {
       const result = await this.model.findOne({ email: email });
       return result;
     } catch (error) {
-      console.log(`get user by email error: ${error.message}`);
+      logger.error(`get user by email error: ${error.message}`);
       throw new Error(`get user by email error: ${error.message}`);
     }
   }
